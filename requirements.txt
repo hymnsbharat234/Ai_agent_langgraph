@@ -4,3 +4,15 @@ langchain_groq
 langgraph
 langchain_community
 python-dotenv
+langchain_tavily
+fastapi
+uvicorn
+pymongo
+chromadb
+sentence-transformers
+python-multipart
+passlib
+python-jose
+pypdf
+pydantic-settings
+email-validator
