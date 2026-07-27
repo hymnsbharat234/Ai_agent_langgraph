@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings,SettingsConfigDict
 from functools import lru_cache
 class Settings(BaseSettings):
-    model_name:str="llama-3.1-8b-instant"
+    MODEL_NAME:str="llama-3.1-8b-instant"
     GROQ_API_KEY:str
     TAVILY_API_KEY:str
     APP_NAME:str

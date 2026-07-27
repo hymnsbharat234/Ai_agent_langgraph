@@ -12,7 +12,9 @@ chromadb
 sentence-transformers
 python-multipart
 passlib
+bcrypt<5
 python-jose
 pypdf
 pydantic-settings
 email-validator
+aiofiles
