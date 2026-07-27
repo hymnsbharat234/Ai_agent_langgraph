@@ -19,6 +19,7 @@ def chat(request: ChatRequest):
     result = graph.invoke(
         {
             "question": request.question,
+            "route":"",
             "retrieved_docs": "",
             "answer": "",
         }

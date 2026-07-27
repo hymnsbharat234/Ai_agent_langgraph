@@ -18,3 +18,8 @@ pypdf
 pydantic-settings
 email-validator
 aiofiles
+langchain_huggingface
+sentence-transformers
+python-docx
+langchain-chroma
+tavily-python
