@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from bson import ObjectId
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -77,5 +77,33 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     del user["_id"]
     del user["hashed_password"]
 
+    return user
+
+
+def get_current_user_optional(request: Request):
+    authorization = request.headers.get("authorization")
+    if not authorization:
+        return None
+
+    token = authorization.replace("Bearer", "", 1).strip()
+    if not token:
+        return None
+
+    payload = decode_access_token(token)
+    if payload is None:
+        return None
+
+    user_id = payload.get("sub")
+    if not user_id:
+        return None
+
+    db = get_database()
+    user = db[User.collection_name].find_one({"_id": ObjectId(user_id)})
+    if user is None:
+        return None
+
+    user["id"] = str(user["_id"])
+    del user["_id"]
+    del user["hashed_password"]
     return user
 

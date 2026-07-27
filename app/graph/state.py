@@ -5,3 +5,5 @@ class GraphState(TypedDict):
     route: str
     retrieved_docs: str
     answer: str
+    history: list
+    user_id: str | None

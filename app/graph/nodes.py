@@ -33,7 +33,6 @@ def retrieve_node(state: GraphState) -> GraphState:
     return state
 
 def generate_node(state):
-
     prompt = f"""
 You are an expert AI Research Assistant.
 Answer ONLY from the provided context.
@@ -50,6 +49,14 @@ Context:
     response = llm.invoke(prompt)
 
     state["answer"] = response.content
+    state.setdefault("history", []).append({
+        "role": "user",
+        "content": state["question"],
+    })
+    state["history"].append({
+        "role": "assistant",
+        "content": response.content,
+    })
 
     return state
 
@@ -57,7 +64,6 @@ Context:
 
 
 def web_search_node(state):
-
     print("Searching Web...")
 
     context = search_web(
@@ -70,3 +76,9 @@ def web_search_node(state):
 
 def route_question(state:GraphState):
     return state["route"]
+
+def supervisor_router(state):
+    route = state.get("route", "general").strip().lower()
+    if route in {"rag", "web", "general"}:
+        return route
+    return "general"
